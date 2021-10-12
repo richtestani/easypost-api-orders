@@ -557,7 +557,10 @@ var demo = document.getElementById('app');
 shippingApp.options.url = endpoint;
 var url = parseShippingApp(shippingApp.data.shipment);
 var parcels = parseShippingApp(shippingApp.data.parcels);
-console.log(parcels);
+
+url = endpoint '?' + url;
+
+console.log(url);
 
 // await request(shippingApp.options, function(error, response, body) {
 //
