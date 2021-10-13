@@ -480,16 +480,16 @@ shippingApp.data = {
 	},
 	parcels : [
 		{
-			"length" : 0,
-			"height" : 0,
-			"witdth" : 0,
-			"weight" : 1
+			"length" : 5,
+			"height" : 5,
+			"witdth" : 5,
+			"weight" : 12
 		},
 		{
-			"length" : 2,
-			"height" : 3,
-			"witdth" : 2,
-			"weight" : 1
+			"length" : 5,
+			"height" : 5,
+			"witdth" : 5,
+			"weight" : 12
 		}
 	]
 };
@@ -518,13 +518,12 @@ if(items.length > 1 && shippingApp.hasBowls) {
 
 
 
-function parseShippingApp(object) {
+function parseShippingApp(object, name) {
 	let url = '';
 	for(s in object) {
-		console.log(typeof object[s])
+		//console.log(typeof object[s])
 		if( typeof object[s] === 'object' ) {
-			
-			url += urlEncodeObject(object[s], s);
+			url += urlEncodeObject(object[s], s, name);
 			
 		}
 	}
@@ -532,35 +531,43 @@ function parseShippingApp(object) {
 	return url;
 }
 
-function urlEncodeObject(object, key) {
+function urlEncodeObject(object, key, name) {
 	
 	return Object.keys(object).map(function(k) {
 		if(!key) {
-			console.log('no key')
+			//console.log('no key')
 			return encodeURIComponent(k) + '=' + encodeURIComponent(object[k]);
 		} else {
-			console.log('key supplied', s);
-			console.log(object[k], k)
-			return '['+key+'][' + encodeURIComponent(k) + ']=' + encodeURIComponent(object[k]);
+			//console.log('key supplied', s);
+			//console.log(object[k], k)
+			return name + '['+key+'][' + encodeURIComponent(k) + ']=' + encodeURIComponent(object[k]);
 		}
 		
 	    
 	}).join('&');
 }
 
-
+shippingApp.endpoint = 'order';
 var endpoint = api + shippingApp.endpoint;
 console.log(endpoint);
 
 var demo = document.getElementById('app');
 
 shippingApp.options.url = endpoint;
-var url = parseShippingApp(shippingApp.data.shipment);
-var parcels = parseShippingApp(shippingApp.data.parcels);
+var url = parseShippingApp(shippingApp.data.shipment, 'order');
+var parcels = parseShippingApp(shippingApp.data.parcels, 'order');
 
-url = endpoint '?' + url;
+url = endpoint + '?' + url + parcels;
 
 console.log(url);
+
+$.ajax(endpoint, {
+	data: url+'&'+ parcels,
+	method: 'post',
+	success: function(r) {
+		console.log(r);
+	}
+});
 
 // await request(shippingApp.options, function(error, response, body) {
 //
