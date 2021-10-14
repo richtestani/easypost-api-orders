@@ -455,7 +455,7 @@ var shippingApp = {
 	options: {
 	    method: 'POST',
 	    auth: {
-	      'user': keys.sw_prd,
+	      'user': keys.sw_dev,
 	    }
 	}
 };
