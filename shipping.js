@@ -554,16 +554,22 @@ console.log(endpoint);
 var demo = document.getElementById('app');
 
 shippingApp.options.url = endpoint;
-var url = parseShippingApp(shippingApp.data.shipment, 'order');
+var shipment = parseShippingApp(shippingApp.data.shipment, 'order');
 var parcels = parseShippingApp(shippingApp.data.parcels, 'order');
+console.log(parcels)
+data = shipment + parcels;
 
-url = endpoint + '?' + url + parcels;
-
-console.log(url);
+console.log(data);
 
 $.ajax(endpoint, {
-	data: url+'&'+ parcels,
+	data: data,
 	method: 'post',
+	xhrFields: {
+	        withCredentials: true
+	 },
+    beforeSend: function (xhr) {
+        xhr.setRequestHeader('Authorization', 'Basic ' + btoa("user:"+keys.sw_prd));
+    },
 	success: function(r) {
 		console.log(r);
 	}
