@@ -1,9 +1,7 @@
 const Easypost = require('@easypost/api');
 const api = new Easypost('sgisHWipY9fJEbHq2MkkZA');
 
-function handle() {
-	
-
+function index(event, context, callback) {
 	/* Either objects or ids can be passed in. If the object does
 	 * not have an id, it will be created. */
 
@@ -53,3 +51,5 @@ function handle() {
 
 	shipment.save().then(console.log);
 }
+
+exports.handler = index;
