@@ -27,7 +27,7 @@ var from = {
     "country": "US",
 }
 
-var parcel = {
+var box = {
     "length": 20.2,
     "width": 10.9,
     "height": 5.0,
@@ -39,7 +39,7 @@ var parcel = {
 
 const toAddress = new api.Address(to);
 const fromAddress = new api.Address(from);
-const parcel = new api.Parcel(parcel);
+const parcel = new api.Parcel(box);
 //const customsInfo = new api.CustomsInfo({ ... });
 
 const shipment = new api.Shipment({
